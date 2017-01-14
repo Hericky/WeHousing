@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WeHousing</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="main.css" />
+  <script src="index.js"></script>
+</head>
+<body ng-app="myApp">
+	<div class="Apartment-List">
+		<div class="container-fluid" ng-controller="ApartmentList">
+			<div class="row">
+				<div class="col-sm-12">
+					<h3><i class="glyphicon glyphicon-search"></i> <b>Minneapolis, MN: 4 Apartments</b></h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-8" id="button-group">
+					<button type="button" ng-click="sortBy('popularity')" class="btn btn-lg">Popularity 
+					<span ng-class="{'glyphicon glyphicon-arrow-up': propertyName != 'price' && reverse, ' glyphicon glyphicon-arrow-down': propertyName != 'price' && !reverse}"></span></button>
+					<button type="button" ng-click="sortBy('price')" class="btn btn-lg">Price <span ng-class="{'glyphicon glyphicon-arrow-up': propertyName != 'popularity' && reverse, ' glyphicon glyphicon-arrow-down': propertyName != 'popularity' && !reverse}"></span></button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-8 page-button">
+					<span class="glyphicon glyphicon-backward" ng-disabled="current == 0" ng-click="prev()">
+					</span>
+						{{current+1}}
+					<span class="glyphicon glyphicon-forward" ng-disabled="current >= apartments.length/max-1" ng-click="next()">
+					</span>
+				</div>
+			</div>
+			<div class="row">
+					<div id="aptList" class="col-sm-12" ng-repeat="apts in apartments | startFrom:current * max | orderBy:propertyName:reverse | limitTo:5">
+						<div class="col-sm-4 picture">
+							<img ng-src="{{apts.image}}">
+						</div>
+						<div class="col-sm-8 detail">
+							<div class="apt-detail">
+								<div id="name" ng-click="value=!value"><b>{{apts.name}}</b></div>
+								<div class="animate"  ng-hide="value"> 
+									<span id="car" ng-if="apts.car" data-toggle="tooltip" tooltip-placement="bottom" title="{{apts.car}}" class="material-icons">directions_car</span>
+									<span id="walk" ng-if="apts.walk"  data-toggle="tooltip" tooltip-placement="bottom" title="{{apts.walk}}" class="material-icons">directions_run</span>
+									<span id="fit" ng-if="apts.fit" data-toggle="tooltip" tooltip-placement="bottom" title="{{apts.fit}}" class="material-icons">fitness_center</span>
+									<hr>
+									<span id="apt-detail">{{apts.detail}}</span>
+								</div>
+								<div ng-hide="!value" id="description"><hr>{{apts.description}}</div>
+								<div ng-hide="!value" id="state">{{apts.State}}</div>
+								<div ng-hide="!value" class="pull-right" id="price">
+									<div>
+										<span ng-hide="!value" id="from">From</span>
+										<span ng-hide="!value" id="value">${{apts.price}}</span>
+									</div>
+									<div>
+										<span ng-hide="!value" id="day">USD/Month</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			</div>
+		
+		</div>
+	</div>
+</body>
+</html>
